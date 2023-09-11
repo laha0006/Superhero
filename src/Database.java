@@ -1,4 +1,5 @@
 import java.sql.Array;
+import java.util.Arrays;
 
 public class Database {
     private Superhero[] superheroList = new Superhero[5];
@@ -9,11 +10,18 @@ public class Database {
         this.superheroList = superheroList;
     }
 
-    public void addSuphero(Superhero superhero) {
-        superheroList[count++] = superhero;
+    public void addSuphero(String name, String realName, boolean isHuman, String superPower, int creationYear, int strength) {
+        superheroList[count++] = new Superhero(name,realName,isHuman,superPower,creationYear,strength);
     }
 
     public Superhero[] getSuperheroList() {
         return superheroList;
+    }
+
+    @Override
+    public String toString() {
+        return "Database{" +
+                "superheroList=" + Arrays.toString(superheroList) +
+                '}';
     }
 }
