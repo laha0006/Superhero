@@ -4,21 +4,24 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Input {
-    private Scanner scanner;
+    private final Scanner scanner;
 
+    public Input() {
+        scanner = new Scanner(System.in);
+    }
     public Input(Scanner scanner) {
         this.scanner = scanner;
     }
 
-    public String inputString(String prompt, String errMsg) {
+    public String inputString(String prompt) {
         String output = "";
         System.out.print(prompt);
 
         try {
+            scanner.next();
             output = scanner.nextLine();
             return output;
         } catch (NoSuchElementException e) {
-            System.out.println(errMsg);
             return output;
         }
     }
@@ -30,7 +33,6 @@ public class Input {
                 return scanner.next().charAt(0);
             } catch (Exception e) {
                 return '?';
-
             }
         }
     }
