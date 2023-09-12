@@ -18,7 +18,7 @@ public class Input {
         System.out.print(prompt);
 
         try {
-            scanner.next();
+            //scanner.nextLine();
             output = scanner.nextLine();
             return output;
         } catch (NoSuchElementException e) {
@@ -27,11 +27,14 @@ public class Input {
     }
 
     public char inputChar(String prompt) {
-        System.out.print(prompt);
+                System.out.print(prompt);
         while (true) {
             try {
-                return scanner.next().charAt(0);
+                char value = scanner.next().charAt(0);
+                scanner.nextLine();
+                return value;
             } catch (Exception e) {
+
                 return '?';
             }
         }
@@ -41,11 +44,14 @@ public class Input {
 
         while(true) {
             try {
+
                 System.out.print(prompt);
-                return scanner.nextInt();
+                int value = scanner.nextInt();
+                scanner.nextLine();
+                return value;
             } catch (InputMismatchException e) {
                 System.out.println("Must be number!");
-                scanner.next();
+                scanner.nextLine();
             }
         }
     }
