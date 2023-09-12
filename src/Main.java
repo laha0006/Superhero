@@ -5,9 +5,11 @@ public class Main {
     public static Database DB = new Database();
     public static void main(String[] args) {
 
+
         while(true) {
             menu();
         }
+
 
 
     }
