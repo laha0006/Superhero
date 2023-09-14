@@ -1,18 +1,22 @@
-import java.sql.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Database {
     private final ArrayList<Superhero> superheroList = new ArrayList<>();
     public Database() {}
-
-//    public Database(Superhero[] superheroList) {
-//        this.superheroList = superheroList;
-//    }
-
-    public void addSuphero(String name, String realName, boolean isHuman, String superPower, int creationYear, int strength) {
-        superheroList.add(new Superhero(name,realName,isHuman,superPower,creationYear,strength));
+    public void addSuperhero(Superhero superhero) {
+        superheroList.add(superhero);
     }
+
+    public Superhero search(String superheroName) {
+        for (Superhero superhero : superheroList) {
+            if(superhero.getName().equals(superheroName)) {
+                return superhero;
+            }
+        }
+
+        return null;
+    }
+
 
     @Override
     public String toString() {
