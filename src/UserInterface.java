@@ -1,3 +1,6 @@
+import java.sql.SQLOutput;
+import java.util.ArrayList;
+import java.util.function.DoubleFunction;
 
 public class UserInterface {
     private final Input input;
@@ -15,18 +18,14 @@ public class UserInterface {
             run = menu();
         }
         System.exit(0);
-
-
     }
-
-
-
 
 
     public boolean menu() {
         System.out.println("1. add superhero");
         System.out.println("2. Show Database");
         System.out.println("3. Search Database");
+        System.out.println("5. Edit Superhero");
         System.out.println("9. exit");
         int choice = input.inputInt(": ");
         return switch (choice) {
@@ -40,6 +39,10 @@ public class UserInterface {
             }
             case 3 -> {
                 searchScreen();
+                yield true;
+            }
+            case 5 -> {
+                editMenu();
                 yield true;
             }
             case 9 -> false;
@@ -61,6 +64,36 @@ public class UserInterface {
         }
     }
 
+    public void editMenu() {
+        System.out.println("Edit Superhero. Search by Superhero name.");
+        String searchTerm = input.inputString("Search: ");
+        ArrayList<Superhero> result = DB.searchMany(searchTerm);
+        int count = 1;
+        if (!result.isEmpty()) {
+            if (result.size() == 1) {
+                System.out.println("Edit: " + result.get(0).getName());
+            } else {
+                for (Superhero superhero : result) {
+                    System.out.println(count++ + ". " + superhero.getName());
+                }
+            }
+            int choice = input.inputInt(": ");
+
+        } else {
+            System.out.println("None Found.");
+        }
+
+    }
+    public void editSuperhero(Superhero superhero) {
+        System.out.println("Press Enter for no change.");
+        System.out.println(superhero.getName());
+        String newName = input.inputString(": ");
+        if(!newName.isEmpty()) superhero.setName(newName);
+        String newRealName = input.inputString(": ");
+        if(!newName.isEmpty()) superhero.setRealName(newRealName);
+        System.out.println(superhero.getName() " is: "+(superhero.isHuman() ? "Human" : "Not Human"));
+
+    }
     public void inputSuperhero() {
         boolean isHuman;
         String name = input.inputString("Superhero name: ");
