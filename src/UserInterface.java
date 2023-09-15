@@ -73,14 +73,8 @@ public class UserInterface {
             int count = 1;
             if (!result.isEmpty()) {
                 if (result.size() == 1) {
-                    System.out.println("Edit: " + result.get(0).getName());
-                    System.out.println("Press enter to edit, press any to exit");
-                    String choice = input.inputString(": ");
-                    if (!choice.isEmpty()) {
-                        run = false;
-                    } else {
-                        editSuperhero(result.get(0));
-                    }
+                    editSuperhero(result.get(0));
+                    run = false;
                 } else {
                     for (Superhero superhero : result) {
                         System.out.println(count++ + ". " + superhero.getName());
@@ -88,7 +82,7 @@ public class UserInterface {
                     System.out.println("Select Superhero to edit. 9 to exit.");
                     int choice = input.inputInt(": ");
                     if (choice != 9 && choice <= result.size() && choice > 0) {
-                        editSuperhero(result.get(choice - 1));
+                        run = editSuperhero(result.get(choice - 1));
                     } else {
                         run = false;
                     }
@@ -100,11 +94,12 @@ public class UserInterface {
 
     }
 
-    public void editSuperhero(Superhero superhero) {
-        System.out.println("Press Enter to Edit, 9 to go back to selection");
+    public boolean editSuperhero(Superhero superhero) {
+        System.out.println("Edit: " + superhero.getName());
+        System.out.println("Press ENTER to Edit, 9 to go back to selection/exit");
         String back = input.inputString(": ");
-        if(!back.isEmpty()) {
-            return;
+        if (!back.isEmpty()) {
+            return true;
         }
         System.out.println("Press Enter for no change.");
         System.out.println("Name: " + superhero.getName());
@@ -132,7 +127,7 @@ public class UserInterface {
         System.out.println("Creation Year: " + superhero.getCreationYear());
         String newCreationYear = input.inputString(": ");
         if (!newCreationYear.isEmpty()) superhero.setCreationYear(Integer.parseInt(newCreationYear));
-
+        return false;
     }
 
     public void inputSuperhero() {
