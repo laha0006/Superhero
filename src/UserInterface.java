@@ -93,11 +93,10 @@ public class UserInterface {
         }
 
     }
-
     public boolean editSuperhero(Superhero superhero) {
         System.out.println("Edit: " + superhero.getName());
         System.out.println("Press ENTER to Edit, 9 to go back to selection/exit");
-        String back = input.inputString(": ");
+        String back = input.inputString(":");
         if (!back.isEmpty()) {
             return true;
         }
