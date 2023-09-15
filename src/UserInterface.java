@@ -65,35 +65,76 @@ public class UserInterface {
     }
 
     public void editMenu() {
-        System.out.println("Edit Superhero. Search by Superhero name.");
+        System.out.println("Search by Superhero name.");
         String searchTerm = input.inputString("Search: ");
         ArrayList<Superhero> result = DB.searchMany(searchTerm);
-        int count = 1;
-        if (!result.isEmpty()) {
-            if (result.size() == 1) {
-                System.out.println("Edit: " + result.get(0).getName());
-            } else {
-                for (Superhero superhero : result) {
-                    System.out.println(count++ + ". " + superhero.getName());
+        boolean run = true;
+        while (run) {
+            int count = 1;
+            if (!result.isEmpty()) {
+                if (result.size() == 1) {
+                    System.out.println("Edit: " + result.get(0).getName());
+                    System.out.println("Press enter to edit, press any to exit");
+                    String choice = input.inputString(": ");
+                    if (!choice.isEmpty()) {
+                        run = false;
+                    } else {
+                        editSuperhero(result.get(0));
+                    }
+                } else {
+                    for (Superhero superhero : result) {
+                        System.out.println(count++ + ". " + superhero.getName());
+                    }
+                    System.out.println("Select Superhero to edit. 9 to exit.");
+                    int choice = input.inputInt(": ");
+                    if (choice != 9 && choice <= result.size() && choice > 0) {
+                        editSuperhero(result.get(choice - 1));
+                    } else {
+                        run = false;
+                    }
                 }
+            } else {
+                System.out.println("None Found.");
             }
-            int choice = input.inputInt(": ");
-
-        } else {
-            System.out.println("None Found.");
         }
 
     }
+
     public void editSuperhero(Superhero superhero) {
+        System.out.println("Press Enter to Edit, 9 to go back to selection");
+        String back = input.inputString(": ");
+        if(!back.isEmpty()) {
+            return;
+        }
         System.out.println("Press Enter for no change.");
-        System.out.println(superhero.getName());
+        System.out.println("Name: " + superhero.getName());
         String newName = input.inputString(": ");
-        if(!newName.isEmpty()) superhero.setName(newName);
+        if (!newName.isEmpty()) superhero.setName(newName);
+
+        System.out.println("Real Name: " + superhero.getRealName());
         String newRealName = input.inputString(": ");
-        if(!newName.isEmpty()) superhero.setRealName(newRealName);
-        System.out.println(superhero.getName() " is: "+(superhero.isHuman() ? "Human" : "Not Human"));
+        if (!newName.isEmpty()) superhero.setRealName(newRealName);
+
+        System.out.println(superhero.getName() + " is " + (superhero.isHuman() ? "Human" : "not Human"));
+        char choice = input.inputChar("Change human status? (y)/(n)");
+        if (choice == 'y') {
+            superhero.setHuman(!superhero.isHuman());
+        }
+
+        System.out.println("Superpower: " + superhero.getSuperPower());
+        String newSuperPowqer = input.inputString(": ");
+        if (!newSuperPowqer.isEmpty()) superhero.setSuperPower(newSuperPowqer);
+
+        System.out.println("Strength: " + superhero.getStrength());
+        String newStrength = input.inputString(": ");
+        if (!newStrength.isEmpty()) superhero.setStrength(Integer.parseInt(newStrength));
+
+        System.out.println("Creation Year: " + superhero.getCreationYear());
+        String newCreationYear = input.inputString(": ");
+        if (!newCreationYear.isEmpty()) superhero.setCreationYear(Integer.parseInt(newCreationYear));
 
     }
+
     public void inputSuperhero() {
         boolean isHuman;
         String name = input.inputString("Superhero name: ");
