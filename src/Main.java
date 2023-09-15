@@ -3,14 +3,8 @@ public class Main {
     public static Database DB = new Database();
 
     public static void main(String[] args) {
-
-        boolean run = true;
-        while (run) {
-            run = menu();
-        }
-        System.exit(0);
-
-
+        UserInterface userInterface = new UserInterface();
+        userInterface.start();
     }
 
     public static boolean menu() {
