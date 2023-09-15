@@ -28,7 +28,6 @@ public class Database {
         ArrayList<Superhero> superheroes = new ArrayList<>();
         for(Superhero superhero : superheroList) {
             if(superhero.getName().contains(superheroName)) {
-                System.out.println("Found!");
                 superheroes.add(superhero);
             }
         }
