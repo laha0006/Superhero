@@ -9,6 +9,7 @@ public class Input {
     public Input() {
         scanner = new Scanner(System.in);
     }
+
     public Input(Scanner scanner) {
         this.scanner = scanner;
     }
@@ -27,7 +28,7 @@ public class Input {
     }
 
     public char inputChar(String prompt) {
-                System.out.print(prompt);
+        System.out.print(prompt);
         while (true) {
             try {
                 char value = scanner.next().charAt(0);
@@ -42,7 +43,7 @@ public class Input {
 
     public int inputInt(String prompt) {
 
-        while(true) {
+        while (true) {
             try {
 
                 System.out.print(prompt);
