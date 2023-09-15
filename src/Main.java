@@ -4,7 +4,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
 //        UserInterface userInterface = new UserInterface();
 //        userInterface.start();
-        String header = "Header";
+        String header = "HeaderHere";
         ArrayList<String> columns = new ArrayList<>();
         columns.add("Superhero");
         columns.add("Name");
@@ -22,6 +22,8 @@ public class Main {
                 .addCell(1954));
 
         table.print();
+
+
 
     }
 }
