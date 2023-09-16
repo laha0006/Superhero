@@ -33,12 +33,12 @@ public class Main {
         table2.addRow(new Row()
                 .addCell("S")
                 .addCell("Blightwater")
-                .addCell("0"));
+                .addCell(0));
 
         table2.addRow(new Row()
                 .addCell("A")
                 .addCell("Azir")
-                .addCell("3"));
+                .addCell(3));
         table2.print();
     }
 }
