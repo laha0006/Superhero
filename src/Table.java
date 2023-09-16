@@ -19,10 +19,8 @@ public class Table {
     private final String WHITESPACE = " ";
 
     private String header;
+    private String columnsHeader;
     private String rowTemplate;
-    private String rowSeperator;
-    private String rowTop;
-    private String rowBottom;
     private ArrayList<Row> rows;
     private ArrayList<String> columns;
     private ArrayList<Integer> columnSizes;
@@ -48,10 +46,10 @@ public class Table {
         int sum = 0;
         if (!columnSizes.isEmpty()) {
             for (int i : columnSizes) {
-                sum += i;
+                sum += i+2;
             }
         }
-        length = sum + size * 4 - 1;
+        length = sum + size +1;
     }
 
     private void setInitColumnSizes() {
@@ -65,7 +63,8 @@ public class Table {
             int count = 0;
             ArrayList<Cell> cells = row.getCells();
             for (Cell cell : cells) {
-                columnSizes.set(count, Math.max(columnSizes.get(0), cell.getSize()));
+                columnSizes.set(count, Math.max(columnSizes.get(count),
+                        Math.max(cell.getSize(),columns.get(count).length())));
                 count++;
             }
         }
@@ -82,10 +81,12 @@ public class Table {
 
     private String createBotHeader() {
         StringBuilder sb = new StringBuilder();
+        int count = 0;
         sb.append(LEFT_EDGE_SEPARATOR);
         for (int i : columnSizes) {
             sb.append(LINE.repeat(i + 2));
-            sb.append(TOP_T);
+            if(count != size-1) sb.append(TOP_T);
+            count++;
         }
         sb.append(RIGHT_EDGE_SEPARATOR);
         return sb.toString();
@@ -93,51 +94,114 @@ public class Table {
 
     private void createHeader() {
         String tempHeader = "";
+        StringBuilder sb = new StringBuilder();
         int length = header.length();
         int spaces = (this.length - (length)) / 2;
-        System.out.println("spaces = " + spaces);
-        System.out.println("length = " + this.length);
-        System.out.println("locaLength = " + length);
-        String headerTop = TOP_LEFT_CORNER + LINE.repeat(this.length - 2) + TOP_RIGHT_CORNER;
-        //String headerBot = BOT_LEFT_CORNER + TOP_T.repeat(this.length-2) + BOT_RIGHT_CORNER;
-        tempHeader += headerTop;
-        tempHeader += "\n";
-        tempHeader += SEPERATOR + WHITESPACE.repeat(spaces - 1);
-        tempHeader += header;
-        tempHeader += (length % 2 == 0) ? (WHITESPACE.repeat(spaces - 1) + SEPERATOR) : (WHITESPACE.repeat(spaces) + SEPERATOR);
-        tempHeader += "\n";
-        tempHeader += createBotHeader();
-        header = tempHeader;
+        int offset = 0;
+        if(length % 2 == 0 || this.length % 2 == 0) {
+            offset = length % 2 + this.length % 2;
+        }
+        sb.append(TOP_LEFT_CORNER)
+                .append(LINE.repeat(this.length - 2))
+                .append(TOP_RIGHT_CORNER).append("\n")
+                .append(SEPERATOR)
+                .append(WHITESPACE.repeat(spaces - 1))
+                .append(header).append(WHITESPACE.repeat(spaces + offset - 1))
+                .append(SEPERATOR)
+                .append("\n")
+                .append(createBotHeader());
+
+        header = sb.toString();
     }
 
-    public String createColumns() {
+    public void createColumns() {
         StringBuilder sb = new StringBuilder();
         int count = 0;
         sb.append(SEPERATOR).append(" ");
         for (String s : columns) {
             String template = "";
-            template +="%-"+(columnSizes.get(count))+("s");
-            if(count != size-1) {
-                template +=" " + SEPERATOR + (" ");
+            template += "%-" + (columnSizes.get(count)) + ("s");
+            if (count != size - 1) {
+                template += " " + SEPERATOR + (" ");
             }
             count++;
-            String tempString = String.format(template,s);
+            String tempString = String.format(template, s);
             sb.append(tempString);
         }
         sb.append(" ").append(SEPERATOR);
+        sb.append(createBottomColumRow());
+        columnsHeader = sb.toString();
+    }
+
+    private String createBottomColumRow() {
+        StringBuilder sb = new StringBuilder();
+        int count = 0;
+        sb.append("\n").append(LEFT_EDGE_SEPARATOR);
+        for (int i : columnSizes) {
+            sb.append(LINE.repeat(i+2));
+            if(count != size-1) sb.append(CROSS);
+            count++;
+        }
+        sb.append(RIGHT_EDGE_SEPARATOR);
         return sb.toString();
     }
 
+    private void printRow() {
+
+        for(Row row : rows) {
+            int count = 0;
+            ArrayList<Cell> cells = row.getCells();
+            StringBuilder rowString = new StringBuilder();
+            for (Cell cell : cells) {
+                String type = "s";
+                String prefix = "%";
+                StringBuilder template = new StringBuilder();
+                template.append(SEPERATOR).append(" ");
+                if (cell.isINT()) {
+                    type = "d";
+                    prefix = "%";
+                }
+                ;
+                if (cell.isDOUBLE()) {
+                    type = ".0f";
+                    prefix = "%";
+                }
+                if (cell.isSTRING()) {
+                    type = "s";
+                    prefix = "%-";
+                }
+                template.append(prefix).append(columnSizes.get(count)).append(type);
+                if (count != size - 1) {
+                    template.append(" ");
+                } else {
+                    template.append(" ").append(SEPERATOR);
+                }
+                if (cell.isINT()) {
+                    rowString.append(String.format(template.toString(), cell.getIntValue()));
+                } else if (cell.isDOUBLE()) {
+                    rowString.append(String.format(template.toString(), cell.getDoubleValue()));
+                } else if (cell.isSTRING()) {
+                    rowString.append(String.format(template.toString(), cell.getStringValue()));
+                } else {
+                    String humanStatus = cell.getBool() ? "YES" : "NO";
+                    rowString.append(String.format(template.toString(), humanStatus));
+                }
+                count++;
+            }
+            System.out.println(rowString.toString());
+        }
+
+    }
     public void print() {
         calcColumnSizes();
         calcLength();
         createHeader();
-        //sb.append(header);
-        //System.out.printf(sb.toString());
-        String cols = createColumns();
+        createColumns();
         System.out.println(header);
-        System.out.println(cols);
-        System.out.println("cols.length() = " + cols.length());
+        System.out.println(columnsHeader);
+        printRow();
+
+
 
     }
 
