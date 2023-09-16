@@ -1,3 +1,5 @@
+package table;
+
 import java.util.ArrayList;
 
 public class Table {
@@ -84,7 +86,7 @@ public class Table {
         if (row.getSize() == size) {
             rows.add(row);
         } else {
-            throw new Exception("Row too short or long!");
+            throw new Exception("table.Row too short or long!");
         }
     }
 
@@ -203,8 +205,8 @@ public class Table {
                 } else if (cell.isSTRING()) {
                     rowsString.append(String.format(template.toString(), cell.getStringValue()));
                 } else {
-                    //TODO Make more general. overload Cell constructor
-                    //to facilitate a new Cell(true,"TrueString","FalseString");
+                    //TODO Make more general. overload table.Cell constructor
+                    //to facilitate a new table.Cell(true,"TrueString","FalseString");
                     String humanStatus = cell.getBool() ? "YES" : "NO";
                     rowsString.append(String.format(template.toString(), humanStatus));
                 }
