@@ -6,41 +6,23 @@ public class Main {
 //        UserInterface userInterface = new UserInterface();
 //        userInterface.start();
 
-        String header = "HeaderHere";
-        ArrayList<String> columns = new ArrayList<>();
-        columns.add("Superheroheroherr");
-        columns.add("Name");
-        columns.add("Human");
-        columns.add("Superpower");
-        columns.add("Strength");
-        columns.add("Year Created");
-        Table table = new Table(header, columns,true);
-        table.addRow(new Row()
-                .addCell("Superman")
-                .addCell("Clark Kent")
-                .addCell(false)
-                .addCell("Super strength.")
-                .addCell(9000)
-                .addCell(1954));
+        ArrayList<String> columns = new ArrayList<>(List.of("Superhero","Name","Human","Superpower","Strenght","Year Created"));
+        Table table1 = new Table("Superhero CRUD Project", columns, true);
+        table1.addRow(new Row().addCell("Superman").addCell("Clark Kent").addCell(false).addCell("Super strength.").addCell(9000).addCell(1954));
 
-        Table table2 = new Table("TFT Tier List", new ArrayList<>(List.of("Tier",
-                "Synergy", "Difficulity")),false);
-        table2.addRow(new Row()
-                .addCell("S")
-                .addCell("Blightwaterr")
-                .addCell(0));
+        Table table2 = new Table("TFT Tier List", new ArrayList<>(List.of("Tier", "Synergy", "Difficulity")), true);
+        table2.addRow(new Row().addCell("S").addCell("Blightwaterr").addCell(0));
+        table2.addRow(new Row().addCell("A").addCell("Azir").addCell(3));
 
-        table2.addRow(new Row()
-                .addCell("A")
-                .addCell("Azir")
-                .addCell(3));;
-        ArrayList<String> columns3 = new ArrayList<>();
-        columns3.add("ColumnOne");
-        columns3.add("ColumnTwo");
-        Table table3 = new Table("Header",columns3,false);
-        table3.addRow(new Row().addCell("Test").addCell("Test2"));
-        System.out.print(table3.getTableString());
-        System.out.print(table2.getTableString());
+        ArrayList<String> columns3 = new ArrayList<>(List.of("Column ONe","Column Two"));
+        Table table3 = new Table("Header", columns3, true);
+        table3.addRow(new Row().addCell("Test1").addCell("Test1"));
+        table3.addRow(new Row().addCell("Test2").addCell("Test2"));
+        table3.addRow(new Row().addCell("Test3").addCell("Test3"));
+
+        System.out.println(table3.getTableString());
+        System.out.println(table2.getTableString());
+        System.out.println(table1.getTableString());
 
 
     }

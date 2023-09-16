@@ -93,7 +93,6 @@ public class Table {
         int length = text.length();
         int spaces = (space - length) / 2;
         int offset = 0;
-        System.out.println();
         if (length % 2 == 0 || space % 2 == 0) {
             offset = length % 2 + space % 2;
         }
@@ -119,7 +118,6 @@ public class Table {
             count++;
         }
         line.append(end);
-        line.append("\n");
         return line.toString();
     }
 
@@ -130,7 +128,7 @@ public class Table {
                 centerText(header,(this.length-2)) + // -2 because of separators taking up one space each.
                 SEPERATOR +
                 "\n" +
-                createTableLine(LEFT_EDGE_SEPARATOR, RIGHT_EDGE_SEPARATOR, TOP_T);
+                createTableLine(LEFT_EDGE_SEPARATOR, RIGHT_EDGE_SEPARATOR, TOP_T)+ "\n";
 
     }
 
@@ -147,7 +145,7 @@ public class Table {
                 count++;
             }
             columnsString.append(" ").append(SEPERATOR).append("\n");
-            columnsString.append(createTableLine(LEFT_EDGE_SEPARATOR, RIGHT_EDGE_SEPARATOR, CROSS));
+            columnsString.append(createTableLine(LEFT_EDGE_SEPARATOR, RIGHT_EDGE_SEPARATOR, CROSS)).append("\n");
             return columnsString.toString();
         } else {
             for (String s : columns) {
@@ -161,7 +159,7 @@ public class Table {
                 columnsString.append(tempString);
             }
             columnsString.append(" ").append(SEPERATOR).append("\n");
-            columnsString.append(createTableLine(LEFT_EDGE_SEPARATOR, RIGHT_EDGE_SEPARATOR, CROSS));
+            columnsString.append(createTableLine(LEFT_EDGE_SEPARATOR, RIGHT_EDGE_SEPARATOR, CROSS)).append("\n");
             return columnsString.toString();
         }
     }
@@ -231,7 +229,7 @@ public class Table {
     public String getTableString() {
         calcColumnSizes();
         calcLength();
-        return ""+ createHeaderString() +
+        return createHeaderString() +
                 createColumnsString() +
                 createRowsString() +
                 createTableEndLine();
