@@ -147,7 +147,6 @@ public class Table {
     }
 
     private void printRow() {
-
         for(Row row : rows) {
             int count = 0;
             ArrayList<Cell> cells = row.getCells();
@@ -161,7 +160,6 @@ public class Table {
                     type = "d";
                     prefix = "%";
                 }
-                ;
                 if (cell.isDOUBLE()) {
                     type = ".0f";
                     prefix = "%";
@@ -200,9 +198,6 @@ public class Table {
         System.out.println(header);
         System.out.println(columnsHeader);
         printRow();
-
-
-
     }
 
 }
