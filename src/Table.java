@@ -18,14 +18,16 @@ public class Table {
 
     private final String WHITESPACE = " ";
 
-    private String header;
+
+    private final String header;
+    private boolean center;
     private String columnsHeader;
     private String rowTemplate;
-    private ArrayList<Row> rows;
-    private ArrayList<String> columns;
-    private ArrayList<Integer> columnSizes;
+    private final ArrayList<Row> rows;
+    private final ArrayList<String> columns;
+    private final ArrayList<Integer> columnSizes;
 
-    private int size;
+    private final int size;
     private int length;
 
     private StringBuilder sb;
@@ -33,28 +35,36 @@ public class Table {
     public Table(String header, ArrayList<String> columns) {
         this.header = header;
         this.columns = columns;
-
         size = columns.size();
-
-        sb = new StringBuilder();
         rows = new ArrayList<>();
         columnSizes = new ArrayList<>();
         setInitColumnSizes();
+        center = false;
+    }
+
+    public Table(String header, ArrayList<String> columns,boolean center) {
+        this.header = header;
+        this.columns = columns;
+        size = columns.size();
+        rows = new ArrayList<>();
+        columnSizes = new ArrayList<>();
+        setInitColumnSizes();
+        this.center = center;
     }
 
     private void calcLength() {
         int sum = 0;
         if (!columnSizes.isEmpty()) {
             for (int i : columnSizes) {
-                sum += i+2;
+                sum += i + 2;
             }
         }
-        length = sum + size +1;
+        length = sum + size + 1;
     }
 
     private void setInitColumnSizes() {
         for (String s : columns) {
-            columnSizes.add(s.length());
+            columnSizes.add(s.length()+2);
         }
     }
 
@@ -64,11 +74,10 @@ public class Table {
             ArrayList<Cell> cells = row.getCells();
             for (Cell cell : cells) {
                 columnSizes.set(count, Math.max(columnSizes.get(count),
-                        Math.max(cell.getSize(),columns.get(count).length())));
+                        Math.max(cell.getSize()+2, columns.get(count).length()+2)));
                 count++;
             }
         }
-        System.out.println(columnSizes);
     }
 
     public void addRow(Row row) throws Exception {
@@ -79,78 +88,93 @@ public class Table {
         }
     }
 
-    private String createBotHeader() {
-        StringBuilder sb = new StringBuilder();
-        int count = 0;
-        sb.append(LEFT_EDGE_SEPARATOR);
-        for (int i : columnSizes) {
-            sb.append(LINE.repeat(i + 2));
-            if(count != size-1) sb.append(TOP_T);
-            count++;
-        }
-        sb.append(RIGHT_EDGE_SEPARATOR);
-        return sb.toString();
-    }
-
-    private void createHeader() {
-        String tempHeader = "";
-        StringBuilder sb = new StringBuilder();
-        int length = header.length();
-        int spaces = (this.length - (length)) / 2;
+    private String centerText(String text,int space) {
+        StringBuilder centerText = new StringBuilder();
+        int length = text.length();
+        int spaces = (space - length) / 2;
         int offset = 0;
-        if(length % 2 == 0 || this.length % 2 == 0) {
-            offset = length % 2 + this.length % 2;
+        System.out.println();
+        if (length % 2 == 0 || space % 2 == 0) {
+            offset = length % 2 + space % 2;
         }
-        sb.append(TOP_LEFT_CORNER)
-                .append(LINE.repeat(this.length - 2))
-                .append(TOP_RIGHT_CORNER).append("\n")
-                .append(SEPERATOR)
-                .append(WHITESPACE.repeat(spaces - 1))
-                .append(header).append(WHITESPACE.repeat(spaces + offset - 1))
-                .append(SEPERATOR)
-                .append("\n")
-                .append(createBotHeader());
 
-        header = sb.toString();
+        centerText.append(WHITESPACE.repeat(spaces))
+                .append(text).append(WHITESPACE.repeat(spaces+offset));
+        return centerText.toString();
     }
 
-    public void createColumns() {
-        StringBuilder sb = new StringBuilder();
-        int count = 0;
-        sb.append(SEPERATOR).append(" ");
-        for (String s : columns) {
-            String template = "";
-            template += "%-" + (columnSizes.get(count)) + ("s");
-            if (count != size - 1) {
-                template += " " + SEPERATOR + (" ");
-            }
-            count++;
-            String tempString = String.format(template, s);
-            sb.append(tempString);
-        }
-        sb.append(" ").append(SEPERATOR);
-        sb.append(createBottomColumRow());
-        columnsHeader = sb.toString();
+    private String createTableLine(String start, String end) {
+        return start +
+                LINE.repeat(this.length - 2) +
+                end;
     }
 
-    private String createBottomColumRow() {
-        StringBuilder sb = new StringBuilder();
+    private String createTableLine(String start, String end, String indice) {
+        StringBuilder line = new StringBuilder();
         int count = 0;
-        sb.append("\n").append(LEFT_EDGE_SEPARATOR);
+        line.append(start);
         for (int i : columnSizes) {
-            sb.append(LINE.repeat(i+2));
-            if(count != size-1) sb.append(CROSS);
+            line.append(LINE.repeat(i + 2));
+            if (count != size - 1) line.append(indice);
             count++;
         }
-        sb.append(RIGHT_EDGE_SEPARATOR);
-        return sb.toString();
+        line.append(end);
+        line.append("\n");
+        return line.toString();
     }
 
-    private void printRow() {
-        for(Row row : rows) {
-            int count = 0;
+    private String createHeaderString() {
+        return createTableLine(TOP_LEFT_CORNER, TOP_RIGHT_CORNER) +
+                "\n" +
+                SEPERATOR +
+                centerText(header,(this.length-2)) + // -2 because of separators taking up one space each.
+                SEPERATOR +
+                "\n" +
+                createTableLine(LEFT_EDGE_SEPARATOR, RIGHT_EDGE_SEPARATOR, TOP_T);
+
+    }
+
+    private String createColumnsString() {
+        StringBuilder columnsString = new StringBuilder();
+        int count = 0;
+        columnsString.append(SEPERATOR).append(" ");
+        if(center) {
+            for (String s : columns) {
+                columnsString.append(centerText(s, columnSizes.get(count)));
+                if (count != size - 1) {
+                    columnsString.append(" ").append(SEPERATOR).append(" ");
+                }
+                count++;
+            }
+            columnsString.append(" ").append(SEPERATOR).append("\n");
+            columnsString.append(createTableLine(LEFT_EDGE_SEPARATOR, RIGHT_EDGE_SEPARATOR, CROSS));
+            return columnsString.toString();
+        } else {
+            for (String s : columns) {
+                StringBuilder template = new StringBuilder();
+                template.append("%-").append(columnSizes.get(count)).append("s");
+                if (count != size - 1) {
+                    template.append(" ").append(SEPERATOR).append(" ");
+                }
+                count++;
+                String tempString = String.format(template.toString(), s);
+                columnsString.append(tempString);
+            }
+            columnsString.append(" ").append(SEPERATOR).append("\n");
+            columnsString.append(createTableLine(LEFT_EDGE_SEPARATOR, RIGHT_EDGE_SEPARATOR, CROSS));
+            return columnsString.toString();
+        }
+    }
+
+    private String createTableEndLine(){
+        return createTableLine(BOT_LEFT_CORNER, BOT_RIGHT_CORNER, BOT_T);
+    }
+
+    private String createRowsString() {
+        StringBuilder rowsString = new StringBuilder();
+        for (Row row : rows) {
+            int cellCount = 0;
             ArrayList<Cell> cells = row.getCells();
-            StringBuilder rowString = new StringBuilder();
             for (Cell cell : cells) {
                 String type = "s";
                 String prefix = "%";
@@ -168,36 +192,58 @@ public class Table {
                     type = "s";
                     prefix = "%-";
                 }
-                template.append(prefix).append(columnSizes.get(count)).append(type);
-                if (count != size - 1) {
+                template.append(prefix).append(columnSizes.get(cellCount)).append(type);
+                if (cellCount != size - 1) {
                     template.append(" ");
                 } else {
                     template.append(" ").append(SEPERATOR);
                 }
                 if (cell.isINT()) {
-                    rowString.append(String.format(template.toString(), cell.getIntValue()));
+                    rowsString.append(String.format(template.toString(), cell.getIntValue()));
                 } else if (cell.isDOUBLE()) {
-                    rowString.append(String.format(template.toString(), cell.getDoubleValue()));
+                    rowsString.append(String.format(template.toString(), cell.getDoubleValue()));
                 } else if (cell.isSTRING()) {
-                    rowString.append(String.format(template.toString(), cell.getStringValue()));
+                    rowsString.append(String.format(template.toString(), cell.getStringValue()));
                 } else {
+                    //TODO Make more general. overload Cell constructor
+                    //to facilitate a new Cell(true,"TrueString","FalseString");
                     String humanStatus = cell.getBool() ? "YES" : "NO";
-                    rowString.append(String.format(template.toString(), humanStatus));
+                    rowsString.append(String.format(template.toString(), humanStatus));
                 }
-                count++;
+                cellCount++;
             }
-            System.out.println(rowString.toString());
+            rowsString.append("\n");
         }
+        return rowsString.toString();
+    }
 
+    @Override
+    public String toString() {
+        calcColumnSizes();
+        calcLength();
+
+        return createHeaderString() +
+                createColumnsString() +
+                createRowsString() +
+                createTableEndLine();
+    }
+
+    public String getTableString() {
+        calcColumnSizes();
+        calcLength();
+        return ""+ createHeaderString() +
+                createColumnsString() +
+                createRowsString() +
+                createTableEndLine();
     }
     public void print() {
         calcColumnSizes();
         calcLength();
-        createHeader();
-        createColumns();
-        System.out.println(header);
-        System.out.println(columnsHeader);
-        printRow();
+        System.out.print(createHeaderString() +
+                createColumnsString() +
+                createRowsString() +
+                createTableEndLine());
+
     }
 
 }
