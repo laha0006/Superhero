@@ -23,9 +23,12 @@ public class Main {
         table3.addRow(new Row().addCell("Test3").addCell("Test3"));
 
         System.out.println(table3.getTableString());
+        table3.addRow(new Row().addCell("Test4").addCell("Test4"));
+        table3.addRow(new Row().addCell("Test5").addCell("Test5"));
+        table3.addRow(new Row().addCell("Test6").addCell("Test6"));
+        System.out.println(table3.getTableString());
         System.out.println(table2.getTableString());
         System.out.println(table1.getTableString());
-
 
     }
 }
