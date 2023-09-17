@@ -29,6 +29,7 @@ public class Main {
         System.out.println(table3.getTableString());
         System.out.println(table2.getTableString());
         System.out.println(table1.getTableString());
+        System.out.print("Superhero>>");
 
     }
 }
