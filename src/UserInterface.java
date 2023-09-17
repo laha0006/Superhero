@@ -5,11 +5,13 @@ import java.util.function.DoubleFunction;
 public class UserInterface {
     private final Input input;
     private final Database DB;
+    private String path;
 
 
     public UserInterface() {
         input = new Input();
         DB = new Database();
+        path = "Superhero App";
     }
 
     public void start() {
@@ -89,6 +91,7 @@ public class UserInterface {
                 }
             } else {
                 System.out.println("None Found.");
+                run = false;
             }
         }
 
@@ -131,7 +134,7 @@ public class UserInterface {
 
     public void inputSuperhero() {
         boolean isHuman;
-        String name = input.inputString("Superhero name: ");
+        String name = input.inputString("Superhero name>");
         String realName = input.inputString("Real name: ");
         String superPower = input.inputString("Superpower: ");
         char isHumanYesNo = input.inputChar("Is Human? (y/n): ");
