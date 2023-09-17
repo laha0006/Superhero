@@ -18,14 +18,14 @@ public class Main {
 
         ArrayList<String> columns3 = new ArrayList<>(List.of("Column ONe","Column Two"));
         Table table3 = new Table("Header", columns3, true);
-        table3.addRow(new Row().addCell("Test1").addCell("Test1"));
-        table3.addRow(new Row().addCell("Test2").addCell("Test2"));
-        table3.addRow(new Row().addCell("Test3").addCell("Test3"));
+        table3.addRow(new Row().addCell("Test100").addCell("Test100"));
+        table3.addRow(new Row().addCell("Test200").addCell("Test200"));
+        table3.addRow(new Row().addCell("Test300").addCell("Test300"));
 
         System.out.println(table3.getTableString());
-        table3.addRow(new Row().addCell("Test4").addCell("Test4"));
-        table3.addRow(new Row().addCell("Test5").addCell("Test5"));
-        table3.addRow(new Row().addCell("Test6").addCell("Test6"));
+        table3.addRow(new Row().addCell("Test4000000000000000000000000").addCell("Test40000000000000000000000000"));
+        table3.addRow(new Row().addCell("Test5000000000000000000000000").addCell("Test50000000000000000000000000"));
+        table3.addRow(new Row().addCell("Test6000000000000000000000000").addCell("Test60000000000000000000000000"));
         System.out.println(table3.getTableString());
         System.out.println(table2.getTableString());
         System.out.println(table1.getTableString());
