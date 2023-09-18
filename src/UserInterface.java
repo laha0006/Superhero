@@ -1,6 +1,6 @@
-import java.sql.SQLOutput;
+import dev.tolana.util.Input;
+
 import java.util.ArrayList;
-import java.util.function.DoubleFunction;
 
 public class UserInterface {
     private final Input input;
