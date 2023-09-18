@@ -89,6 +89,7 @@ public class UserInterface {
                 }
             } else {
                 System.out.println("None Found.");
+                run = false;
             }
         }
 
@@ -120,11 +121,11 @@ public class UserInterface {
         if (!newSuperPowqer.isEmpty()) superhero.setSuperPower(newSuperPowqer);
 
         System.out.println("Strength: " + superhero.getStrength());
-        String newStrength = input.inputString(": ");
+        String newStrength = input.inputStringAsInt(": ");
         if (!newStrength.isEmpty()) superhero.setStrength(Integer.parseInt(newStrength));
 
         System.out.println("Creation Year: " + superhero.getCreationYear());
-        String newCreationYear = input.inputString(": ");
+        String newCreationYear = input.inputStringAsInt(": ");
         if (!newCreationYear.isEmpty()) superhero.setCreationYear(Integer.parseInt(newCreationYear));
         return false;
     }
