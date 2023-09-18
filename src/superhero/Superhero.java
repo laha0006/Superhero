@@ -1,3 +1,5 @@
+package superhero;
+
 public class Superhero {
     private String name;
     private String realName;
@@ -65,7 +67,7 @@ public class Superhero {
 
     @Override
     public String toString() {
-        return "Superhero{" +
+        return "superhero.Superhero{" +
                 "\nname='" + name + '\'' +
                 "\n, realName='" + realName + '\'' +
                 "\n, isHuman=" + isHuman +
