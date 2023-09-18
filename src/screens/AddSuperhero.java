@@ -14,7 +14,7 @@ public class AddSuperhero extends Screen {
 
     public void inputSuperhero() {
         boolean isHuman;
-        String name = input.inputString("superhero.Superhero name>");
+        String name = input.inputString("Superhero name: ");
         String realName = input.inputString("Real name: ");
         String superPower = input.inputString("Superpower: ");
         char isHumanYesNo = input.inputChar("Is Human? (y/n): ");

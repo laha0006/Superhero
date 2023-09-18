@@ -63,7 +63,7 @@ public class EditSuperheroMenu extends Screen{
         return false;
     }
     public void editMenu() throws Exception {
-        System.out.println("Search by superhero.Superhero name.");
+        System.out.println("Search by Superhero name.");
         String searchTerm = input.inputString("Search: ");
         ArrayList<Superhero> result = db.searchMany(searchTerm);
         boolean run = true;

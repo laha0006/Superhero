@@ -67,7 +67,7 @@ public class Superhero {
 
     @Override
     public String toString() {
-        return "superhero.Superhero{" +
+        return "Superhero{" +
                 "\nname='" + name + '\'' +
                 "\n, realName='" + realName + '\'' +
                 "\n, isHuman=" + isHuman +
