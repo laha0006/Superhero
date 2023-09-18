@@ -29,7 +29,7 @@ public class EditSuperheroMenu extends Screen{
                 .addCell(superhero.getCreationYear()));
         //System.out.println("Edit: " + superhero.getName());
         System.out.println(table.getTableString());
-        System.out.println("Press ENTER to Edit, 9 to go back to selection/exit");
+        System.out.println("Press ENTER to Edit, 0 to EXIT");
         String back = input.inputString(":");
         if (!back.isEmpty()) {
             return true;
