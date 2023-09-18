@@ -1,4 +1,5 @@
-import java.lang.reflect.Array;
+package superhero;
+
 import java.util.ArrayList;
 
 public class Database {
@@ -17,9 +18,9 @@ public class Database {
         superheroList.add(superhero);
     }
 
-    public Superhero search(String superheroName) {
-        for (Superhero superhero : superheroList) {
-            if (superhero.getName().equals(superheroName)) {
+    public superhero.Superhero search(String superheroName) {
+        for (superhero.Superhero superhero : superheroList) {
+            if (superhero.getName().toLowerCase().contains(superheroName.toLowerCase())) {
                 return superhero;
             }
         }
@@ -29,17 +30,20 @@ public class Database {
     public ArrayList<Superhero> searchMany(String superheroName) {
         ArrayList<Superhero> superheroes = new ArrayList<>();
         for (Superhero superhero : superheroList) {
-            if (superhero.getName().contains(superheroName)) {
+            if (superhero.getName().toLowerCase().contains(superheroName.toLowerCase())) {
                 superheroes.add(superhero);
             }
         }
         return superheroes;
     }
 
+    public ArrayList<Superhero> getSuperheroList() {
+        return superheroList;
+    }
 
     @Override
     public String toString() {
-        return "Database{" +
+        return "superhero.Database{" +
                 "superheroList=" + superheroList +
                 '}';
     }

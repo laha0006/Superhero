@@ -1,3 +1,5 @@
+package dev.tolana.util;
+
 import java.sql.SQLOutput;
 import java.util.InputMismatchException;
 import java.util.NoSuchElementException;

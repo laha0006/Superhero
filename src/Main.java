@@ -1,11 +1,9 @@
-import table.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import screens.*;
+import superhero.Database;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        UserInterface userInterface = new UserInterface();
+        superhero.UserInterface userInterface = new superhero.UserInterface();
         userInterface.start();
     }
 }
