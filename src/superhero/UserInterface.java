@@ -3,8 +3,6 @@ package superhero;
 import dev.tolana.util.Input;
 import screens.*;
 
-import java.util.ArrayList;
-
 public class UserInterface {
     private final Input input;
     private final Database db;
