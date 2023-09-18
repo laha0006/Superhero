@@ -20,7 +20,7 @@ public class EditSuperheroMenu extends Screen{
 
     public boolean editSuperhero(Superhero superhero) throws Exception {
         Table table = new Table("Edit " + superhero.getName(),
-                new ArrayList<>(List.of("Superhero Name"," Real Name","Human?","Superpower","Strength","Year created")));
+                new ArrayList<>(List.of("Superhero Name"," Real Name","Human?","Superpower","Strength","Year created")),true);
         table.addRow(new Row().addCell(superhero.getName())
                 .addCell(superhero.getRealName())
                 .addCell(superhero.isHuman())

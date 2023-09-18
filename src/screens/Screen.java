@@ -28,7 +28,7 @@ public class Screen {
         if (!screens.isEmpty()) {
             boolean run = true;
             while (run) {
-                Table table = new Table(name, new ArrayList<>(List.of("#", "Option")));
+                Table table = new Table(name, new ArrayList<>(List.of("#", "Option")),true);
                 int count = 1;
                 for (Screen screen : screens) {
                     Row row = new Row();
@@ -44,7 +44,7 @@ public class Screen {
                 screens.get(choice - 1).show();
             }
         } else {
-            System.out.println("Press ANY key to go back or exit");
+            System.out.println("Press ENTER to go back or exit");
             input.inputString(": ");
             return false;
         }

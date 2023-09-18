@@ -21,7 +21,7 @@ public class ShowDatabase extends Screen{
         ArrayList<Superhero> superheroes = db.getSuperheroList();
         Table table = new Table("Superheros",
                 new ArrayList<>(List.of("Superhero Name","Real Name",
-                        "Human?","Superpower","Strength","Year Created")));
+                        "Human?","Superpower","Strength","Year Created")),true);
         for (Superhero hero : superheroes) {
             table.addRow(new Row().addCell(hero.getName())
                     .addCell(hero.getRealName())
