@@ -27,6 +27,20 @@ public class Input {
         }
     }
 
+    public String inputStringAsInt(String prompt) {
+        String output = "";
+        while(true) {
+            System.out.print(prompt);
+            try {
+                output = scanner.nextLine();
+                int testParse = Integer.parseInt(output);
+                return output;
+            } catch (Exception e) {
+                System.out.println("Must be number!");
+            }
+        }
+    }
+
     public char inputChar(String prompt) {
         System.out.print(prompt);
         while (true) {
