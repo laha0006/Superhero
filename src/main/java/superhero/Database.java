@@ -18,8 +18,8 @@ public class Database {
         superheroList.add(superhero);
     }
 
-    public superhero.Superhero search(String superheroName) {
-        for (superhero.Superhero superhero : superheroList) {
+    public Superhero search(String superheroName) {
+        for (Superhero superhero : superheroList) {
             if (superhero.getName().toLowerCase().contains(superheroName.toLowerCase())) {
                 return superhero;
             }
