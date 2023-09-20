@@ -29,7 +29,6 @@ class DatabaseTest {
                 () -> assertEquals(999,sh.getStrength()));
 
     }
-
     @Test
     void testSearchMany() {
         //superheroList.add(new Superhero("Superman", "Clark Kent", false, "Super.", 1950, 999));
