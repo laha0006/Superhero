@@ -1,6 +1,7 @@
 package superhero;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Database {
     private final ArrayList<Superhero> superheroList;
@@ -47,4 +48,9 @@ public class Database {
                 "superheroList=" + superheroList +
                 '}';
     }
+
+    public void delete(int index) {
+        superheroList.remove(index);
+    }
+
 }
