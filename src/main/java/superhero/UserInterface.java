@@ -18,10 +18,12 @@ public class UserInterface {
         Screen editSupehero = new EditSuperheroMenu("Edit Superhero",db);
         Screen showDatabase = new ShowDatabase("Show Database",db);
         Screen searchDatabase = new SearchSuphero("Search Database",db);
+        Screen deleteSuperhero = new DeleteScreen("Delete Superhero",db);
         mainScreen.addScreen(showDatabase);
         mainScreen.addScreen(addSuperhero);
         mainScreen.addScreen(searchDatabase);
         mainScreen.addScreen(editSupehero);
+        mainScreen.addScreen(deleteSuperhero);
         boolean run = true;
         while(run) {
             run = mainScreen.show();
