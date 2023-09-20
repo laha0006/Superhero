@@ -19,11 +19,6 @@ public class Screen {
         input = new Input();
     }
 
-    protected void end() {
-        System.out.println("Any key to go BACK or EXIT.");
-        input.inputString(": ");
-    }
-
     public boolean show() throws Exception {
         if (!screens.isEmpty()) {
             boolean run = true;

@@ -61,7 +61,6 @@ public class Input {
 
         while (true) {
             try {
-
                 System.out.print(prompt);
                 int value = scanner.nextInt();
                 scanner.nextLine();
